@@ -1,0 +1,27 @@
+
+<div class=" col-lg-4 col-md-6 col-8 py-3 px-2 " >
+    <div class="single-product shadow m-1 p-2" >
+        <div class="product-img">
+            <a href="{{ p.get_absolute_url }}">
+                <img class="default-img" src="{{ p.thumbnail.url }}" alt="{{ p.name }} ">
+                {% comment %} <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#"> {% endcomment %}
+            </a>
+            <div class="button-head">
+                <div class="product-action">
+                    {% comment %} <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Shop Now</span></a> {% endcomment %}
+                    {% comment %} <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a> {% endcomment %}
+                    {% comment %} <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a> {% endcomment %}
+                </div>
+                <div class="product-action-2">
+                    <a title="Shop Now" href="{{ p.get_absolute_url }}" class="" style="background-color: #F7941D; padding: 10px; color: white;">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="product-content p-1" style="overflow: hidden">
+                <p class="truncate">{{ p.name }}</p>
+            <div class="product-price">
+                <span>${{ p.price }}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+  {% comment %} <tr>
+    <th>
+        atributes of form field
+        {% if form_field.field.required %}*{% endif %}
+            {{ form_field.label_tag }}
+    </th>
+    <td>
+        {% if form_field.errors %}
+            <ul class="errorlist">
+                {% for error in form_field.errors %}
+                    <li>{{ form_field.label }}: {{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {{ form_field }}
+    </td>
+</tr>   {% endcomment %}
+
+{% if form_field.errors %}
+    <div style="color: red ; ">
+        {% if form_field.errors %}
+           
+                {% for error in form_field.errors %}
+                    <p style="color: red ; display:inline-block">{{ error }}</p>
+                {% endfor %}
+            
+        {% endif %}
+        
+    </div>
+{% endif %}

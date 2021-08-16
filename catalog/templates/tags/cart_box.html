@@ -1,0 +1,8 @@
+{% with cart_item_count as cart_count %}
+    
+        <div class="sinlge-bar shopping">
+			<a href="{% url 'show_cart' %}" class="single-icon"><i class="ti-bag"></i> <span class="total-count"> {{ cart_count }}</span></a>
+		</div>
+        
+ 
+{% endwith %}

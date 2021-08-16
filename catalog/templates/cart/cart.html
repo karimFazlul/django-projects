@@ -1,0 +1,126 @@
+{% extends "catalog/catalog.html" %}
+{% load catalog_filters %}
+{% comment %} action ='.' should be replaced by product.get_absolute_url {% endcomment %}
+{% block content %}
+    <table summary="Your Shopping Cart" id="shopping_cart">
+        <caption>Your Shopping Cart</caption>
+        <thead>
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th scope="col" class="right">Total</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th class="right" colspan="5">
+                    Cart Subtotal:
+                </th>
+                <th class="right">
+                    {{ cart_subtotal|currency }}
+                   
+                </th>
+            </tr>
+            {% if cart_items %}
+                <tr>
+                    <th class="right" colspan="6">
+                        {% comment %} <a href="/url/to/checkout/">Checkout Now</a> {% endcomment %}
+
+                        <div id="smart-button-container">
+                            <div style="text-align: center;">
+                                {% comment %} uncomment this line and the respective script to activate paypal checkout {% endcomment %}
+                                {% comment %} <div id="paypal-button-container"></div> {% endcomment %}
+                                <form action="{% url 'checkout' %}" method="get">
+                                    
+                                    <input type="submit" name="submit" value="Checkout" alt="Checkout" />
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            {% endif %}
+        </tfoot>
+        <tbody>
+            {% if cart_items %}
+                {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <a href="{{ item.get_absolute_url }}" class="cart">
+                                {{ item.name }}
+                            </a>
+                        </td>
+                        <td>{{ item.price|currency }}</td>
+                        <form method="post" action="." class="cart">
+                            <td class="right">
+                        
+                                {% csrf_token %}
+                                <label for="quantity">Quantity:</label>
+                                <input type="text" name="quantity" value="{{ item.quantity }}" id="quantity"
+                                    size="2" class="quantity" maxlength="5" />
+                                <input type="hidden" name="item_id" value="{{ item.id }}" />
+                            </td>
+                            <td>
+                                <input type="submit" name="submit" value="Update" />
+                        
+                            </td>
+                        </form>
+                        <td>
+                            <form method="post" action="." class="cart">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                <input type="submit" name="submit" value="Remove"/>
+                            </form>
+                        </td>
+                        <td class="right">{{ item.total|currency }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" style="height:30px;">
+                        Your cart is empty.
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% comment %} <script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=USD" data-sdk-integration-source="button-factory"></script>
+    <script>
+        let id = '{{ paypal_client_id }}'
+        console.log(id)
+        let total = {{ cart_subtotal }}
+        console.log(total)
+        function initPayPalButton() {
+        paypal.Buttons({
+            style: {
+            shape: 'rect',
+            color: 'gold',
+            layout: 'vertical',
+            label: 'paypal',
+            
+            },
+
+            createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{"amount":{"currency_code":"USD","value":total+5,"breakdown":{"item_total":{"currency_code":"USD","value":total},"shipping":{"currency_code":"USD","value":5},"tax_total":{"currency_code":"USD","value":0}}}}]
+            });
+            },
+
+            onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+            });
+            },
+
+            onError: function(err) {
+            console.log(err);
+            }
+        }).render('#paypal-button-container');
+        }
+        initPayPalButton();
+  </script> {% endcomment %}
+
+{% endblock %}

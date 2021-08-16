@@ -1,0 +1,51 @@
+:root{
+    box-sizing: border-box;
+}
+
+hover-yellow{
+    background-color:#333 !important;
+    /* color:black; */
+}
+
+hover-yellow:hover{
+    color:#F7941D;
+    /* color:black; */
+}
+input#id_quantity{
+    padding: 10px;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.truncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+input[value="Checkout"]{
+    background-color:#333
+}
+.relative{
+    position: relative;
+}
+.errorlist{
+    color: rgb(211, 45, 45);
+    position: absolute;
+    top: -50px;
+    left: 26%;
+}
+th>label{
+    margin-left: 300px;
+}
+td>input{
+    margin-left: -200px;
+    padding: 10px;
+}
+/* #id_password1{
+    margin-top: 90px;
+} */

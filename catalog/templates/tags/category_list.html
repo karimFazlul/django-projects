@@ -1,0 +1,19 @@
+<ul class="shop-w__category-list gl-scroll">
+    {% with active_categories as cats %}
+        {% for c in cats %}
+            <li>
+                {% comment %} 
+                    request_path is passed from catalog_tags.category_list 
+                {% endcomment %}
+                {% ifequal c.get_absolute_url request_path %}
+                {% comment %}
+                    if curent category is requested category print it without being a link 
+                {% endcomment %}
+                    {{ c.name | capfirst }}
+                {% else %}
+                    <a href="{{ c.get_absolute_url }}" class="category">{{ c.name | capfirst}}</a><br />
+                {% endifequal %}
+			<li>
+        {% endfor %}
+    {% endwith %}
+</ul>

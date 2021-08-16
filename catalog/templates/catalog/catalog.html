@@ -1,0 +1,35 @@
+{% extends "catalog/base.html" %}
+{% load catalog_tags %}
+{% load search_tags %}
+
+{% block site_wrapper %}
+    {% include 'catalog/header.html' %}
+    
+        
+       
+                
+          
+        <div id="middle">
+            <div id="sidebar">
+                <div class="sidebarIEPadder">
+                    {% search_box request %}
+                    <br />
+                    {% category_list request.path %}
+                </div>
+            </div>
+            <div id="content">
+                <a name=”content”></a>
+                <div class="">
+                    {% block content %}
+                    
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="footerIEPadder">
+                [footer here]
+            </div>
+        </div>
+    </div>
+{% endblock %}

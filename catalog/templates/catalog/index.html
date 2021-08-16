@@ -1,0 +1,20 @@
+{% extends "catalog/catalog.html" %}
+{% load catalog_tags %}
+
+{% block content %}
+    <h1>Welcome to eBazar.com, a place to  find your daily goods!</h1>
+    <div class="container">
+        <div class="row">
+            {% product_list recently_viewed 'Your Recently Viewed' %}
+        </div>
+        <div class="row">
+            {% product_list view_recs 'Similar Products' %}
+        </div>
+        <div class=" row">
+            {% product_list featured 'Featured Products' %}
+        </div>
+        <div class="row">
+            {% product_list search_recs 'Recommended For You' %}
+        </div>
+    </div>
+{% endblock %}

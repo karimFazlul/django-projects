@@ -1,0 +1,171 @@
+{% extends "catalog/base.html" %}
+{% load catalog_filters %}
+
+	
+	
+	
+{% block site_wrapper %}
+   {% comment %} header {% endcomment %}
+   
+<header class="header shop sticky-top" >
+			<!-- Topbar -->
+			<div class="topbar ">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-4 col-md-12 col-12" >
+							<!-- Top Left -->
+							<div class="top-left">
+								{% include "tags/navigation.html" %}
+							</div>
+							<!--/ End Top Left -->
+						</div>
+						<div class="col-lg-8 col-md-12 col-12">
+							<!-- Top Right -->
+							<div class="right-content">
+								<ul class="list-main">
+									<li><i class="ti-location-pin"></i> Store location</li>
+									<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
+									
+									{% if user.is_authenticated %}
+										<li>
+											<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+											<a href="{% url 'my_account' %}">{{user.username |capfirst }}</a>
+										</li>
+										<li>
+											<a href="{% url 'logout' %}">Logout</a>
+										</li>
+									{% else %}
+										<a href="{% url 'register' %}">Sign Up</a>
+										
+										<li>
+											<a href="{% url 'login' %}">Login</a>
+										</li>
+									{% endif %}
+										
+									</ul>
+								
+									
+								
+							</div>
+							<!-- End Top Right -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Topbar -->
+			
+		</header>
+		<!--/ End Header -->
+			
+	<!-- Shopping Cart -->
+	<div class="shopping-cart section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<!-- Shopping Summery -->
+					<table class="table shopping-summery">
+						<thead>
+							<tr class="main-hading">
+								<th>PRODUCT</th>
+								<th>NAME</th>
+								<th class="text-center">UNIT PRICE</th>
+								<th class="text-center">QUANTITY</th>
+								<th class="text-center">TOTAL</th> 
+                                <th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+                            {% if cart_items %}
+                                {% for item in cart_items %}
+                                    <tr>
+                                        <td class="image" data-title="No"><img src="{{ item.product.thumbnail.url }}" alt="{{ item.name }}"></td>
+                                        <td class="product-des" data-title="Description">
+                                            <p class="product-name"><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></p>
+                                            
+                                        </td>
+                                        <td class="price" data-title="Price"><span>{{ item.price|currency }} </span></td>
+                                        <td class="qty" data-title="Qty"><!-- Input Order -->
+                                            <div class="input-group">
+                                                <form method="post" action="." >
+                                                    
+                                                    <input type="text" name="quantity" value="{{ item.quantity }}" id="quantity"
+                                                        size="2" class="quantity" maxlength="5" />
+                                                    <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                                    <input type="submit" name="submit" value="Update" class="btn" style="width:  105px;"/>
+                                                        
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!--/ End Input Order -->
+                                        </td>
+                                        <td class="total-amount" data-title="Total"><span>{{ item.total|currency }}</span></td>
+                                        <td class="action" data-title="Remove">
+                                            <form method="post" action="." class="cart">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                                <input type="submit" name="submit" value="Remove" class="btn"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+							{% else %}
+                                <tr>
+                                    <td >
+                                        Your cart is empty.
+                                    </td>
+                                </tr>
+                            {% endif %}
+						</tbody>
+					</table>
+					<!--/ End Shopping Summery -->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<!-- Total Amount -->
+					<div class="total-amount">
+						<div class="row">
+							<div class="col-lg-8 col-md-5 col-12 " style="display: hidden;">
+								<div class="left">
+									<div class="coupon">
+										<form action="#" target="_blank">
+											<input name="Coupon" placeholder="Enter Your Coupon">
+											<button class="btn">Apply</button>
+										</form>
+									</div>
+									<div class="checkbox">
+										<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+10$)</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-7 col-12">
+								<div class="right">
+									<ul>
+										<li>Cart Subtotal<span>{{ cart_subtotal|currency }}</span></li>
+										{% comment %} <li>Shipping<span>Free</span></li>
+										<li>You Save<span>$20.</span></li>
+										<li class="last">You Pay<span>$310.00</span></li> {% endcomment %}
+									</ul>
+									<div class="button5">
+										<form action={% url 'checkout' %} method="get"  >
+                                            
+                                            <input type="submit" name="submit" value="Checkout" alt="Checkout" class="btn btn-dark" />
+                                            
+                                        </form>
+                                
+										<a href="{% url 'catalog_home' %}" class="btn">Continue shopping</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--/ End Total Amount -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--/ End Shopping Cart -->
+{% endblock %}
+	
+	
