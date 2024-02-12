@@ -24,7 +24,7 @@ def show_cart(request):
     cart_items = cart.get_cart_items(request)
     page_title = 'Shopping Cart'
     cart_subtotal = cart.cart_subtotal(request)
-    return render(request, 'cart/v2/cart.html', locals());
+    return render(request, 'cart/v2/cart.html', locals())
 
 # def update_all_cart_items(request):
 #     if request.method == 'POST':

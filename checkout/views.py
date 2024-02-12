@@ -12,6 +12,7 @@ def show_checkout(request):
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return redirect(cart_url)
+    
     if request.method == 'POST':
         
         postdata = request.POST.copy()

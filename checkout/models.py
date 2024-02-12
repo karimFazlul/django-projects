@@ -58,6 +58,7 @@ class Order(models.Model):
         return total
     def get_absolute_url(self):
         return reverse('order_details', kwargs={ 'order_id': self.id })
+    
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
