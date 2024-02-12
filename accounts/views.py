@@ -17,6 +17,7 @@ def userRegistration(request, template_name="registration/register.html"):
         if form.is_valid():
             form.save()
             # username and password should be taken from form.cleaned_data 
+            # form.cleaned_data.get('username')
             un = postdata.get('username','')
             pw = postdata.get('password1','')
             new_user = authenticate(username=un, password=pw)
